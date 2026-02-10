@@ -1,5 +1,4 @@
 import sqlite3
-import main
 import progresso
 import atividades
 
@@ -65,6 +64,14 @@ def email_existe(email):
 	conexao.close()
 	return check_email is not None
 
+def cpf_existe(cpf):
+	conexao = sqlite3.connect('banco.db')
+	cursor = conexao.cursor()
+	cursor.execute("SELECT 1 FROM usuarios WHERE cpf = ?", (cpf,))
+	check_cpf = cursor.fetchone()
+	conexao.close()
+	return check_cpf is not None
+
 def cadastrar_usuario():
 	conexao = sqlite3.connect('banco.db')
 	cursor = conexao.cursor()
@@ -74,7 +81,7 @@ def cadastrar_usuario():
 	cpf = input("\nDigite o CPF do(a) usuário(a): (Apenas números) ")
 	if not cpf.isdigit() or len(cpf)!=11:
 		return print(f"CPF incorreto. Certifique-se de usar apenas 11 números.")
-	if main.cpf_existe(cpf):
+	if cpf_existe(cpf):
 		conexao.close()
 		return print(f"\nO CPF inserido já está cadastrado.")
 	if email_existe(email):
@@ -151,7 +158,7 @@ def menu_usuario(cpf,tipo):
 						print(f"\nVoltando ao Menu do Aluno...")
 					case "3":
 						print(f"\nDeslogando...")
-						return main.login()
+						return True
 					case _:
 						print(f"\nApenas números entre 1 a 3 são escolhas possíveis.")
 			
@@ -165,7 +172,7 @@ def menu_usuario(cpf,tipo):
 						return menu_lista(cpf,tipo)
 					case "2":
 						print(f"\nDeslogando...")
-						return main.login()
+						return True
 					case _:
 						print(f"\nApenas números 1 e 2 são escolhas possíveis.")
 			case "3":
@@ -180,7 +187,7 @@ def menu_usuario(cpf,tipo):
 						cadastrar_usuario()
 					case "3":
 						print(f"\nDeslogando...")
-						return main.login()
+						return True
 					case _:
 						print(f"\nApenas números entre 1 a 3 são escolhas possíveis.")
 
@@ -257,7 +264,7 @@ def menu_curso(cpf,tipo,curso):
 	while True:
 		match tipo:
 			case "1":
-				print("\nOpções do curso: \n1. Selecionar atividade \n2.Ver seu progresso total \n3. Ver ranking dos 3 melhores alunos do curso \n4. Voltar")
+				print("\nOpções do curso: \n1. Selecionar atividade \n 2.Ver seu progresso total \n3. Ver ranking dos 3 melhores alunos do curso \n4. Voltar")
 				opcao = input("\nEscolha a opção desejada: ")
 				match opcao:
 					case "1":
@@ -313,7 +320,7 @@ def menu_curso(cpf,tipo,curso):
 def menu_progresso(cpf,tipo,curso):
 	while True:
 		progresso.progresso_total(cpf,curso)
-		print("\n1. Resetar progresso \n.2 Voltar")
+		print("\n1. Resetar progresso \n2. Voltar")
 		opcao = input("\nO que gostaria de fazer? ")
 		match opcao:
 			case "1":
@@ -357,6 +364,3 @@ def menu_atividade(cpf,tipo,curso,atividade):
 				return menu_curso(cpf,tipo,curso)
 			case _:
 				print(f"\nApenas os números entre 1 e 3 são escolhas possíveis.")
-
-
-menu_usuario("38746195211","1")
