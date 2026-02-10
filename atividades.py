@@ -10,7 +10,7 @@ def adicionar_atividade(curso):
 	c = input(f"\nPreencha as informações da alternativa C: ")
 	d = input(f"\nPreencha as informações da alternativa D: ")
 	dica = input(f"\nDigite uma dica para a atividade: ")
-	gabarito = input(f"\nQual a respota da atividade? \nA \nB \nC \nD \n>").lower().strip()
+	gabarito = input(f"\nQual a respota da atividade? \nA \nB \nC \nD \n> ").lower().strip()
 	if len(gabarito)==1:
 		lista = ['a','b','c','d']
 		if gabarito in lista:

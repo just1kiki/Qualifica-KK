@@ -15,7 +15,7 @@ def adicionar_curso(cpf):
 	cursor = conexao.cursor()
 	print("\nPara adicionar um curso preencha as informações a seguir: ")
 	nome = input(f"\nDigite o nome do curso a ser adicionado: ")
-	horario = (input("\nQual o horário do curso: \n1-Matutino \n2-Vespertino \n3-Noturno \n>"))
+	horario = (input("\nQual o horário do curso: \n1-Matutino \n2-Vespertino \n3-Noturno \n> "))
 	if horario.isdigit() and len(horario)==1:
 		opcao = int(horario)-1
 		if opcao <= 2:
@@ -89,7 +89,7 @@ def cadastrar_usuario():
 		return print(f"\nO e-mail inserido já está cadastrado.")
 
 	senha = (nome_completo[:3])+"@"+(str(cpf)[-4:])
-	tipo = input("\nQual o tipo de usuário: \n1- Aluno \n2- Professor \n3- Coordenador \n>")
+	tipo = input("\nQual o tipo de usuário: \n1- Aluno \n2- Professor \n3- Coordenador \n> ")
 	if tipo.isdigit() and len(tipo)==1:
 		opcao = int(tipo)-1
 		if opcao == 0:
@@ -243,11 +243,8 @@ def menu_lista(cpf,tipo):
 					case "1":
 						curso = input("\nDigite o número do curso desejado: ")
 						if curso_existe(curso):
-							if checar_uc(cpf,curso):
-								print(f"\nAcessando opções do curso...")
-								return menu_curso(cpf,tipo,curso)
-							else:
-								print(f"\nApenas os cursos em que está matriculado são selecionáveis.")
+							print(f"\nAcessando opções do curso...")
+							return menu_curso(cpf,tipo,curso)
 						else:
 							print(f"\nApenas números entre os da lista são escolhas possíveis.")
 					case "2":
@@ -264,7 +261,7 @@ def menu_curso(cpf,tipo,curso):
 	while True:
 		match tipo:
 			case "1":
-				print("\nOpções do curso: \n1. Selecionar atividade \n 2.Ver seu progresso total \n3. Ver ranking dos 3 melhores alunos do curso \n4. Voltar")
+				print("\nOpções do curso: \n1. Selecionar atividade \n2. Ver seu progresso total \n3. Ver ranking dos 3 melhores alunos do curso \n4. Voltar")
 				opcao = input("\nEscolha a opção desejada: ")
 				match opcao:
 					case "1":
@@ -291,7 +288,7 @@ def menu_curso(cpf,tipo,curso):
 						atividades.adicionar_atividade(curso)
 					case "2":
 						print("\nTem certeza disso? Essa decisão não pode ser desfeita. Todas as estrelas recebidas por essa atividade serão apagadas juntamente com ela.")
-						confirmacao = input ("\n1. Sim \n2. Não")
+						confirmacao = input ("\n1. Sim \n2. Não \n> ")
 						match confirmacao:
 							case "1":
 								atividades.deletar_atividade(atividades.escolher_atividade(atividades.listar_atividades(curso)))
@@ -325,7 +322,7 @@ def menu_progresso(cpf,tipo,curso):
 		match opcao:
 			case "1":
 				print("\nTem certeza disso? Essa decisão não pode ser desfeita, e não haverá mudança na quantidade de estrelas já recebidas.")
-				confirmacao = input ("\n1. Sim \n2. Não")
+				confirmacao = input ("\n1. Sim \n2. Não \n> ")
 				match confirmacao:
 					case "1":
 						progresso.resetar_progresso(cpf,curso)
@@ -342,11 +339,11 @@ def menu_progresso(cpf,tipo,curso):
 def menu_atividade(cpf,tipo,curso,atividade):
 	while True:
 		atividades.mostrar_atividade(atividade)
-		print("\n1. Responder \n2.Pedir dica \n.3 Voltar")
+		print("\n1. Responder \n2. Pedir dica \n3. Voltar")
 		opcao = input("\nO que gostaria de fazer? ")
 		match opcao:
 			case "1":
-				resposta = input(f"\nQual opção deseja marcar como resposta? \nA \nB \nC \nD \n>").lower().strip()
+				resposta = input(f"\nQual opção deseja marcar como resposta? \nA \nB \nC \nD \n> ").lower().strip()
 				if len(resposta)==1:
 					lista = ['a','b','c','d']
 					if resposta in lista:
